@@ -1,0 +1,40 @@
+{
+  "name": "@y0x54a/bunda",
+  "description": "A lightweight web framework for the Bun javascript runtime.",
+  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "dependencies": {},
+  "devDependencies": {
+    "bun-types": "^0.1.8",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.7.4"
+  },
+  "scripts": {
+    "test": "bun wiptest",
+    "build": "rimraf dist && tsc -p tsconfig.build.json"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md",
+    "package.json"
+  ],
+  "keywords": [
+    "bun",
+    "bunjs",
+    "web",
+    "app",
+    "http",
+    "server",
+    "framework",
+    "application",
+    "middleware",
+    "router"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/y0x54a/bunda.git"
+  }
+}

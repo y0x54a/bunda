@@ -1,0 +1,47 @@
+name: ci
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: test - bun ${{matrix.bun}} - ${{matrix.os}}
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        bun: [0.1.8, 0.1.9, 0.1.10]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: '**/package.json'
+      - name: Setup bun ${{matrix.bun}}
+        run: |
+          curl -fsSL https://bun.sh/install | bash -s bun-v${{matrix.bun}}
+          echo "${HOME}/.bun/bin" >> $GITHUB_PATH
+      - run: npm install
+      - run: npm run test
+
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: '**/package.json'
+      - name: Setup bun
+        run: |
+          curl -fsSL https://bun.sh/install | bash -s bun-v0.1.10
+          echo "${HOME}/.bun/bin" >> $GITHUB_PATH
+      - run: npm install
+      - run: npm run build

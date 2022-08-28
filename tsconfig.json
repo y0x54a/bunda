@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "es2022",
+    "sourceMap": false,
+    "declaration": true,
+    "skipLibCheck": true,
+    "noEmitOnError": true,
+    "moduleResolution": "node",
+    "outDir": "build/dist",
+    "types": [
+      "bun-types"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts"
+  ]
+}
