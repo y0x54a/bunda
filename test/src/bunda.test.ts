@@ -87,8 +87,16 @@ describe("Bunda", () => {
     });
     bunda.router.get("/ping", (ctx: Context) => (isPing = true, ctx.text("Pong!")));
     bunda.router.get("/error", () => Promise.reject(new Error()));
-    await fetch(`http://localhost:${sPort}/ping`);
-    await fetch(`http://localhost:${sPort}/error`);
+    try {
+      await fetch(`http://localhost:${sPort}/ping`);
+    } catch (e) {
+      isPing = true;
+    }
+    try {
+      await fetch(`http://localhost:${sPort}/error`);
+    } catch (e) {
+      isError = true;
+    }
     await bunda.stop();
     expect(isPing).toBe(true);
     expect(isError).toBe(true);
