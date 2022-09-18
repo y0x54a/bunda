@@ -11,6 +11,8 @@ import {
   PathnameRouter
 } from "../../src";
 
+let port = 3000;
+
 describe("Bunda", () => {
   test("router", () => {
     const bunda1 = new Bunda();
@@ -41,7 +43,7 @@ describe("Bunda", () => {
   });
 
   test("serve", async () => {
-    const bunda = Bunda.create();
+    const bunda = Bunda.create({port: port++});
     expect(await bunda.serve()).toBe(bunda);
     expect(bunda.isServed).toBe(true);
     expect(await bunda.stop()).toBe(bunda);
@@ -58,7 +60,7 @@ describe("Bunda", () => {
   });
 
   test("stop", async () => {
-    const bunda = await Bunda.serve();
+    const bunda = await Bunda.serve({port: port++});
     expect(bunda.isServed).toBe(true);
     expect(await bunda.stop()).toBe(bunda);
     expect(bunda.isServed).toBe(false);
@@ -74,7 +76,9 @@ describe("Bunda", () => {
   test("fetch", async () => {
     let isPing = false;
     let isError = false;
+    const sPort = port++;
     const bunda = await Bunda.serve({
+      port: sPort,
       services: {
         errorHandler: Bunda.rawService(new ErrorHandler({
           fallback: () => (isError = true)
@@ -83,8 +87,8 @@ describe("Bunda", () => {
     });
     bunda.router.get("/ping", (ctx: Context) => (isPing = true, ctx.text("Pong!")));
     bunda.router.get("/error", () => Promise.reject(new Error()));
-    await fetch("http://localhost:3000/ping");
-    await fetch("http://localhost:3000/error");
+    await fetch(`http://localhost:${sPort}/ping`);
+    await fetch(`http://localhost:${sPort}/error`);
     await bunda.stop();
     expect(isPing).toBe(true);
     expect(isError).toBe(true);
