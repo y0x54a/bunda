@@ -9,9 +9,9 @@ import {
 import Url from "./url";
 
 export type ContextOptionsType = {
-  readonly container: ContainerInterface;
-  readonly request: Request;
-  readonly state?: ObjType;
+  container: ContainerInterface;
+  request: Request;
+  state?: ObjType;
 }
 
 class Context implements ContextInterface
