@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        bun: [0.1.13, 0.2.0, 0.2.1, 0.2.2, 0.3.0, 0.4.0]
+        bun: [0.2.0, 0.2.1, 0.2.2, 0.3.0, 0.4.0, 0.5.0]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -41,7 +41,7 @@ jobs:
           cache-dependency-path: '**/package.json'
       - name: Setup bun
         run: |
-          curl -fsSL https://bun.sh/install | bash -s bun-v0.4.0
+          curl -fsSL https://bun.sh/install | bash -s bun-v0.5.0
           echo "${HOME}/.bun/bin" >> $GITHUB_PATH
       - run: npm install
       - run: npm run build
